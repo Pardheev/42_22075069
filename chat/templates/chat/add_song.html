@@ -1,0 +1,13 @@
+{% extends "chat/Base.html" %}
+{% block content %}
+<center>
+    <div class="formadd" style="color:whitesmoke;margin-top: 40px;">
+        <h2>Add Song</h2>
+       <form method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+        {{ form.as_p }}
+       <button type="submit">Add Song</button>
+       </form>
+    </div>
+</center>
+{% endblock %}

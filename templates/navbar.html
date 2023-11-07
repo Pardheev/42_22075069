@@ -1,0 +1,19 @@
+{% if request.user.is_authenticated %}
+
+{% comment %}  {% endcomment %}
+<a href="/userdetails">profile</a>
+<a href="/">chats</a>
+<hr>
+{% comment %}  {% endcomment %}
+<a href="{% url 'logout' %}">Logout</a>
+{% comment %} i need to add side bar for all chats {% endcomment %}
+<hr>
+
+{% else %}
+
+
+<a href="{% url 'login' %}">Login</a>
+
+
+{% endif %}
+<hr>

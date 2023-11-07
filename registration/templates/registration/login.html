@@ -1,0 +1,30 @@
+{% extends "registration/RegisterBase.html" %}
+{% block title %} Login {% endblock %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+
+{% block content %}
+<center style="height : 832px;">
+    <div class="sign-up form" style="max-width: 600px">
+        <h1 class="mt-4">  User Login  </h1>
+        <hr class="mt-0 mb-4">
+        <form method="post" class="form-group form-floating">
+            {% csrf_token %}
+            <!-- {% comment %} {{form|crispy}} {% endcomment %}
+            {{form.as_p}} -->
+            <div class="form-floating mb-3" >
+                 {{ form.username.label_tag }}
+                 {{ form.username }}
+            </div>
+            
+            <div class="form-floating mb-3" placeholder="Password">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            
+            <p>Don't have an account?<a href="/signup"> Create one.</a></p>
+            <button type="submit" class="btn btn-success">Login</button>
+
+        </form>
+    </div>
+</center>
+{% endblock %}

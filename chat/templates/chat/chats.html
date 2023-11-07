@@ -1,0 +1,105 @@
+{% extends "chat/Base.html" %}
+{% load static %}
+
+{% block  content %}
+
+        <div style="margin-top: 0px;margin-left: 10px; background-color: rgb(50, 78, 4);color:white;width :1200px;background-image: url('https://images.pexels.com/photos/884788/pexels-photo-884788.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');align-items: flex-end;";>
+            <div class="row">
+               
+                    <img src="{% static 'images/user_image.jpg' %}" alt="hugenerd" width="50" height="50" class="rounded-circle">
+                    <div style="margin-top: 3px;">
+                        <h3>{{friend.name}}</h3>
+                    </div>
+            </div>
+        </div>
+        
+            <div class="messages" id="board" style="height: 722px; width:1200px;background-image: url('https://initiate.alphacoders.com/images/133/cropped-1440-900-1334556.png?3709');">
+                {% block message %}
+                {% endblock %}
+            </div>
+
+        
+        <div class="row" >
+            <form method="post" class="form-group" id="chat-box" onsubmit="reloadPage()">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <input type="text" placeholder="Type a message..." name="message" id="msg_field">
+                        <button type="submit" name="send" class="btn btn-success" id="send_btn">
+                            <div class="circle">
+                                <span class="arrow-icon">&#10148;</span>
+                            </div>
+                            
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    <script>
+        var messageBody = document.querySelector('.messages');
+        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+
+        sender_id = "{{ friend.id }}";
+        receiver_id = "{{ curr_user.id }}";
+
+        function scrolltoend() {
+            $('#board').stop().animate({
+                scrollTop: $('#board')[0].scrollHeight
+            }, 800);
+         }
+
+        const text_box=
+            '<div class="row">'+'<div class="col-8 offset-7 mb-4" style="  max-width: 600px; width:auto">'
+            +'<div class="message-bubble sent" style="display:flex;flex-direction:column;flex-direction :row;align-items: flex-end;text-align: left;" >'+
+              '<div class="col-9">'+
+              '<p style="word-wrap:break-word">{description}</p>'+
+              '</div>'+
+              '</div>'+
+              '</div>'+
+              '</div>'
+              
+        //For sending
+        $(function () {
+            $('#chat-box').on('submit', function (event) {
+                event.preventDefault();
+                var message = $('#msg_field');
+                // var today = new Date();
+                // var time = today.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                var today = new Date();
+                var hours = today.getHours();
+                var minutes = today.getMinutes();
+                var amOrPm = hours >= 12 ? 'p.m.' : 'a.m.';
+                hours = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+
+                var time = hours + ':' + (minutes < 10 ? '0' : '') + minutes + amOrPm;
+
+                console.log(time);
+                send('{{ curr_user.username }}', '{{ friend.username }}', message.val(),time);
+                message.val('');
+            })
+        })
+
+        function send(sender, receiver, message,time){
+
+            $.post('/api/messages', '{"sender_name": "' + sender + '", "receiver_name": "' +
+                    receiver + '","description": "' + message + '","time": "' + time +'" }', function (data) {
+                var field = text_box.replace('{description}', message);
+                console.log(time)
+                field = field.replace('{time}', time)
+                $('#board').append(field);
+                scrolltoend();
+            })
+        }
+        
+        
+    function reloadPage() {
+        // Reload the page after a short delay (you can adjust the delay as needed)
+        setTimeout(function() {
+            location.reload();
+        }, 1); // 1000 milliseconds (1 second) delay
+    }
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,158 @@
+ .container {
+  border: 1px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 5px; /* Decrease padding to reduce size */
+  margin: 5px; /* Decrease margin to reduce size */
+  max-height: 500px; /* Decrease max-height to limit container height */
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container img {
+  float: left;
+  max-width: 40px; /* Decrease max-width to reduce image size */
+  width: 100%;
+  margin-right: 10px; /* Decrease margin to reduce size */
+  border-radius: 50%;
+}
+.container img.right {
+  float: right;
+  margin-left: 10px; /* Decrease margin to reduce size */
+  margin-right: 0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+} 
+
+.messages {
+  background-image:url("{static 'images/what.jpg'}");
+  height: 1000px; /* Decrease height to limit the size of the message container */
+  width: 800px; /* Decrease width to limit the size of the message container */
+  border: 1px solid #000; /* Decrease border width to reduce size */
+  margin-top: 0px; /* Decrease margin to reduce size */
+  overflow-y: auto;
+  overflow-x:hidden;
+}
+
+#msg_field {
+  margin-left: 12px; /* Decrease margin to reduce size */
+  width: 1000px;
+  margin-top: 0px; /* Decrease margin to reduce size */
+  margin-bottom: 20px;
+  border-radius: 20px; /* Decrease width to limit the size of the input field */
+}
+
+#send_btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 5px;
+}
+
+.arrow-icon {
+  color: white; /* WhatsApp green color */
+  margin-right: 5px; /* Adjust the spacing as needed */
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 20px;
+  position: relative;
+}
+.sent {
+  background-color:#dcf8c6;
+  color: black;
+  align-self: flex-end;
+}
+
+.received {
+  background-color: #f4f4f4;
+  color: #333;
+  align-self: flex-start;
+}
+
+.time-right {
+  float: right;
+  color: black;
+}
+
+.time-left {
+  float: left;
+  color:black;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  background-color:  rgb(68, 232, 74);
+  border-radius: 10%; /* Makes it a circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px; /* Decrease margin to reduce size */
+  margin-bottom: 20px;
+}
+
+/* Style for the container */
+.friends-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Style for each friend box */
+.friend-box {
+  border: 1px solid ;
+  padding: 10px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  transition: background-color 0.3s;
+}
+.friend-box:hover {
+  background-color: black; /* Change this to the color you want on hover */
+}
+/* Style for the friend's name */
+.friend-name {
+  font-weight: bold;
+}
+
+/* Style for the user image */
+.friend-image {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.audio-container {
+  margin-top: 10px; /* Adjust margin as needed */
+}
+
+.audio-controls {
+  width: 100px; /* Adjust the width for the audio controls */
+  height: 25px; /* Adjust the height for the audio controls */
+  background: #f5f5f5; /* Background color for the audio controls */
+  border: 1px solid #ccc; /* Border for the audio controls */
+  border-radius: 5px; /* Rounded corners for the audio controls */
+}
+
+.audio-controls::-webkit-media-controls-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

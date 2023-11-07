@@ -1,0 +1,13 @@
+{% extends "main.html" %} 
+{%block content%}
+{% comment %} <h5>Radhasoami Satsang beas<h5> {% endcomment %}
+<br></br>
+    <div>
+        <div>
+            {%for chat in chats %}
+            <div><a href="{% url 'chatroom' chat.id %}">{{chat.name}}</div>
+        </div>
+    </div>
+    {%endfor%}
+{% endblock content%}
+{% comment %} when ever i went to chatroom i need to load all their convesation in latest below order {% endcomment %}

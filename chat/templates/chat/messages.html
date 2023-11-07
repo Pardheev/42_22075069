@@ -1,0 +1,106 @@
+{% extends 'chat/chats.html' %}
+{% load static %}
+
+{% block message %}
+{% for message in messages %}
+    <div class="row">
+      {% if curr_user == message.sender_name %}
+      <div class="col-8 offset-7 mb-3" style=" color: white; max-width: 600px;width: auto;">
+        <div class="message-bubble sent " style="display:flex;flex-direction:column;flex-direction: row;align-items: flex-end;text-align: left;">
+          <div class="col-9">
+            <p style="word-break: break-word;">{{message.description}}</p>
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="dropdown" >
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: none; border: none; color: black;">
+                  <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="{% url 'choose_song' message.id %}" style="color: black;">Choose</a>
+                  {% if message.song_id is not None %}
+                  <a class="dropdown-item">
+                    <body>
+                      <audio controls>
+                          <source src="{{ message.song_id.audio_file.url }}" type="audio/mpeg">
+                      </audio>
+                  </body>
+                  </a>
+                {% endif %} 
+                </div>
+              </div>
+              <span class="time-right" style="font-size: 10px;">{{message.time}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% else %}
+      <div class="col-6 mb-4" style=" color: black;max-width: 600px;width: auto;">
+        <div class="message-bubble received " style="display:flex;flex-direction:column;flex-direction :row;align-items: flex-end;text-align: left;" >
+          {% if message.song_id is not None %}
+          <div class="col-8">
+            <p style="word-wrap: break-word;">{{message.description}}</p>
+          </div>
+              <body>
+                
+                
+                <audio controls>
+                    <source src="{{ message.song_id.audio_file.url }}" type="audio/mpeg">
+                </audio>
+            </body>
+            <span class="time-left" style="font-size: 10px;">{{message.time}}</span>
+          {% else %}
+          <div class="col-10">
+            <p style="word-wrap: break-word;">{{message.description}}</p>
+          </div>
+          <span class="time-left" style="font-size: 10px;">{{message.time}}</span>
+        {% endif %}
+        
+        </div>
+      </div>
+    {% endif %} 
+  </div>
+     
+{% endfor %}
+<script>
+function scrolltoend() {
+    $('#board').stop().animate({
+        scrollTop: $('#board')[0].scrollHeight
+    }, 800);
+}
+
+$(function () {
+    setInterval(receive, 1000)
+})
+
+
+
+const text=
+            '<div class="row">'+'<div class="col-6 mb-4" style=" color: white; width: 500px;">'
+            +'<div class="message-bubble received" style="display:flex;flex-direction:column;flex-direction :row;align-items: flex-end;text-align: left;" >'+
+              '<img src="{% static 'images/user_image.jpg' %}" alt="Avatar" class="rounded-circle" style="width: 50px; height: 50px;">'+
+              '<div class="col-7">'+
+              '<p style="word-wrap:break-word">{{description}}</p>'+
+              '</div>'+
+              '<span class="time-left">{{time}}</span>'+
+              '</div>'+
+              '</div>'+
+              '</div>'
+
+
+function receive(){
+    $.get('/api/messages/' + sender_id + '/' + receiver_id, function(data){
+        if(data.length !== 0){
+            // for(var i = 0; i < data.length; i++){
+                var field = text.replace('{description}', data.description);
+                var time = data.time.slice(0, 5) + ' a.m'
+                field = field.replace('{time}', time);
+                $('#board').append(field);
+                scrolltoend();   
+        }
+    })
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "chat/Base.html" %}
+{% load static %}
+{% block title %}Search Songs{% endblock %}
+{% block content %}
+    <center>
+        <div class="wrapper" style="width: 400px;">
+            <h2 style="margin: 16px 0px;color: white;">Add Songs</h2>
+            <div class="topnav">
+                <div class="search-container">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Search by name, song_name" name="search" style="width: 210px">
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </form>
+                </div>
+            </div>
+            <div style="overflow-y: auto; height: 600px;">
+                <ul class="list-group list-group-flush">
+                    {% for song in songs %}
+                        <a href="/add_song_message/{{id}}/{{song.id}}" >
+                            <li class="list-group-item list-group-item-action">
+                            <div class="row">
+                            <div class="col-4">
+                                <img src="{% static 'images/music_pro.jpg' %}" style="width: 50px; height: 50px;">
+                            </div>
+                            <div class="col">
+                                <div class="row"><p>{{song.title}}</p></div>
+                                <div class="row"><p>@Duration : {{song.duration}}</p></div>
+                            </div>
+                            </div>
+                            </li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </center>
+
+
+{% endblock %}
